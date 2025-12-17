@@ -28,6 +28,7 @@ CREATE TABLE Users (
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     middle_name VARCHAR(50),
+    avatar_url TEXT DEFAULT NULL;
     
     gender ENUM('Male', 'Female', 'Other'),
     date_of_birth DATE,
@@ -54,6 +55,7 @@ CREATE TABLE Classes (
     
     created_by_admin_id INT,
     teacher_id INT,
+    theme_color VARCHAR(50) DEFAULT 'linear-gradient(to right, #2563eb, #4f46e5)',
     
     FOREIGN KEY (created_by_admin_id) REFERENCES Users(user_id) ON DELETE SET NULL,
     FOREIGN KEY (teacher_id) REFERENCES Users(user_id) ON DELETE SET NULL
@@ -96,7 +98,8 @@ CREATE TABLE Assignments (
     
     start_date DATETIME,
     end_date DATETIME,
-    scale INT DEFAULT 10, 
+    scale INT DEFAULT 10,
+    attachment_url TEXT, 
     
     FOREIGN KEY (class_id) REFERENCES Classes(class_id) ON DELETE CASCADE
 );
@@ -119,19 +122,30 @@ CREATE TABLE Submissions (
     FOREIGN KEY (student_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
--- =============================================
--- PHẦN 3: DỮ LIỆU MẪU (Mock Data) - Để test ngay
--- =============================================
 
--- Tạo 1 Admin
-INSERT INTO Users (username, password, email, role, admin_start_date) 
-VALUES ('admin1', '123456', 'admin@hcmut.edu.vn', 'Admin', CURDATE());
+CREATE TABLE ForumPosts (
+    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    class_id INT NOT NULL,
+    user_id INT NOT NULL,
+    parent_id INT DEFAULT NULL, -- Nếu NULL thì là Chủ đề mới, nếu có số thì là Reply cho bài đó
+    
+    content TEXT,
+    image_url TEXT, -- Lưu đường dẫn ảnh nếu có
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (class_id) REFERENCES Classes(class_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_id) REFERENCES ForumPosts(post_id) ON DELETE CASCADE
+);
 
--- Tạo 1 Teacher
-INSERT INTO Users (username, password, email, role, experience_years) 
-VALUES ('teacher1', '123456', 'gv@hcmut.edu.vn', 'Teacher', 5);
 
--- Tạo 2 Student
-INSERT INTO Users (username, password, email, role) 
-VALUES ('student1', '123456', 'sv1@hcmut.edu.vn', 'Student'),
-       ('student2', '123456', 'sv2@hcmut.edu.vn', 'Student');
+CREATE TABLE Notifications (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,          -- Người nhận thông báo
+    message TEXT NOT NULL,         -- Nội dung thông báo
+    link VARCHAR(255),             -- Đường dẫn khi click vào (VD: assignments?id=1)
+    is_read BOOLEAN DEFAULT FALSE, -- Trạng thái đã đọc
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+);
