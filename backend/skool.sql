@@ -28,7 +28,7 @@ CREATE TABLE Users (
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     middle_name VARCHAR(50),
-    avatar_url TEXT DEFAULT NULL;
+    avatar_url TEXT DEFAULT NULL,
     
     gender ENUM('Male', 'Female', 'Other'),
     date_of_birth DATE,
@@ -148,4 +148,5 @@ CREATE TABLE Notifications (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+
 );
