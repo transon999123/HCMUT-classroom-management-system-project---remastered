@@ -148,5 +148,68 @@ CREATE TABLE Notifications (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
-
 );
+
+CREATE TABLE Quiz (
+    quiz_id INT AUTO_INCREMENT PRIMARY KEY,
+    class_id INT NOT NULL,
+    student_id INT NOT NULL,
+    teacher_id INT NOT NULL,
+    quiz_status ENUM('Not Started', 'In Progress', 'Completed') DEFAULT 'Not Started',
+    quiz_limit_time INT, -- Thời gian làm bài (phút)
+    quiz_allowed_attempts INT DEFAULT 1,
+    quiz_scale INT DEFAULT 10,
+    quiz_password VARCHAR(100), -- Mật khẩu nếu có
+    quiz_results JSON,
+    quiz_deadline_date DATETIME,
+    quiz_dealine_time DATETIME,
+
+    FOREIGN KEY (class_id) REFERENCES Classes(class_id) ON DELETE CASCADE,
+    FOREIGN KEY (student_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (teacher_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+);
+
+CREATE TABLE Questions (
+    question_id INT AUTO INCREMENT PRIMARY KEY,
+    question_scale INT DEFAULT 1,
+    question_type ENUM ('Multiple Choice', 'True/False', 'Fill in the Blank') NOT NULL,
+    question_given_answers JSON NOT NULL,
+    question_correct_answers JSON NOT NULL,
+);
+
+CREATE TABLE Attempt (
+    student_id INT NOT NULL,
+    quiz_id INT NOT NULL,
+    attempt_count INT DEAFAULT 1,
+    attempt_duration INT,
+    attempt_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    attempt_status BOOLEAN DEFAULT FALSE,
+
+    FOREIGN KEY (student_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES Quiz(quiz_id) ON DELETE CASCADE,
+);
+
+CREATE TABLE CreateQuiz (
+    teacher_id INT NOT NULL,
+    quiz_id INT NOT NULL,
+    create_quiz_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    create_quiz_date DATE,
+
+    FOREIGN KEY (teacher_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES Quiz(quiz_id) ON DELETE CASCADE,   
+);
+
+CREATE TABLE Event (
+    event_id INT AUTO INCREMENT PRIMARY KEY,
+    event_title VARCHAR(200) NOT NULL,
+    event_description TEXT,
+    event_time DATETIME NOT NULL,
+    event_duration INT, -- Độ dài sự kiện (phút)
+    event_loop_count INT DEFAULT 0, -- Số lần lặp lại
+    event_created_by INT NOT NULL,
+    user_id INT NOT NULL,
+    notification_id INT NOT NULL,
+
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (notification_id) REFERENCES Notifications(notification_id) ON DELETE CASCADE,
+)
