@@ -1,4 +1,4 @@
-## Tên đề tài: Hệ thống Quản lý Lớp học (Classroom Management System – CMS)
+## Hệ thống Quản lý Lớp học (Classroom Management System – CMS)
 ### Mô tả:
 Đây là một nền tảng web được xây dựng nhằm số hóa và hợp lý hóa các hoạt động quản lý, giảng dạy và học tập trong phạm vi lớp học của một trung tâm giáo dục (học thêm). Hệ thống tập trung vào các chức năng cốt lõi: 
 - quản lý lớp học
