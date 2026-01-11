@@ -64,7 +64,7 @@ CREATE TABLE Teachers (
 CREATE TABLE Admins (
     admin_id INT PRIMARY KEY,
     admin_code VARCHAR(20) NOT NULL UNIQUE,
-    resonsibility_area VARCHAR(100),
+    responsibility_area VARCHAR(100),
     
     FOREIGN KEY (admin_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
@@ -166,24 +166,12 @@ CREATE TABLE ForumPosts (
 );
 
 
-CREATE TABLE Notifications (
-    notification_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,          -- Người nhận thông báo
-    event_id INT,                  -- Sự kiện liên quan (nếu có)
-    message TEXT NOT NULL,         -- Nội dung thông báo
-    link VARCHAR(255),             -- Đường dẫn khi click vào (VD: assignments?id=1)
-    is_read BOOLEAN DEFAULT FALSE, -- Trạng thái đã đọc
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
-    FOREIGN KEY (event_id) REFERENCES Event(event_id) ON DELETE CASCADE
-);
 
 CREATE TABLE Quiz (
     quiz_id INT AUTO_INCREMENT PRIMARY KEY,
     class_id INT NOT NULL,
-    student_id INT NOT NULL,
     teacher_id INT NOT NULL,
+    quiz_title VARCHAR(200) NOT NULL,
     quiz_description TEXT,
     quiz_status ENUM('Not Started', 'In Progress', 'Completed') DEFAULT 'Not Started',
     quiz_limit_time INT, -- Thời gian làm bài (phút)
@@ -191,14 +179,13 @@ CREATE TABLE Quiz (
     quiz_scale INT DEFAULT 10,
     quiz_password VARCHAR(100), -- Mật khẩu nếu có
     quiz_deadline_date DATETIME,
-    quiz_dealine_time DATETIME,
+    quiz_deadline_time DATETIME,
 
     quiz_created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     quiz_updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     FOREIGN KEY (class_id) REFERENCES Classes(class_id) ON DELETE CASCADE,
-    FOREIGN KEY (student_id) REFERENCES Students(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (teacher_id) REFERENCES Teachers(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (teacher_id) REFERENCES Teachers(teacher_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Questions (
@@ -209,7 +196,7 @@ CREATE TABLE Questions (
     question_attachment_url TEXT,
     question_type ENUM ('Multiple Choice', 'True/False', 'Fill in the Blank') NOT NULL,
 
-    Foreign KEY (quiz_id) REFERENCES Quiz(quiz_id) ON DELETE CASCADE,
+    Foreign KEY (quiz_id) REFERENCES Quiz(quiz_id) ON DELETE CASCADE
 );
 
 CREATE TABLE CHOICES (
@@ -218,7 +205,7 @@ CREATE TABLE CHOICES (
     choice_description TEXT,
     is_correct BOOLEAN DEFAULT FALSE,
 
-    FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Attempt (
@@ -235,8 +222,8 @@ CREATE TABLE Attempt (
     score_breakdown JSON,
 
 
-    FOREIGN KEY (student_id) REFERENCES Students(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (quiz_id) REFERENCES Quiz(quiz_id) ON DELETE CASCADE,
+    FOREIGN KEY (student_id) REFERENCES Students(student_id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES Quiz(quiz_id) ON DELETE CASCADE
 );
 
 Create table StudentAnswer (
@@ -254,8 +241,21 @@ Create table StudentAnswer (
 );
 
 
+CREATE TABLE Notifications (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,          -- Người nhận thông báo
+    event_id INT,                  -- Sự kiện liên quan (nếu có)
+    message TEXT NOT NULL,         -- Nội dung thông báo
+    link VARCHAR(255),             -- Đường dẫn khi click vào (VD: assignments?id=1)
+    is_read BOOLEAN DEFAULT FALSE, -- Trạng thái đã đọc
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+);
+
+
 CREATE TABLE Event (
-    event_id INT AUTO INCREMENT PRIMARY KEY,
+    event_id INT AUTO_INCREMENT PRIMARY KEY,
     event_title VARCHAR(200) NOT NULL,
     event_description TEXT,
     event_time DATETIME NOT NULL,
@@ -269,7 +269,7 @@ CREATE TABLE Event (
     notification_id INT NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (notification_id) REFERENCES Notifications(notification_id) ON DELETE CASCADE,
+    FOREIGN KEY (notification_id) REFERENCES Notifications(notification_id) ON DELETE CASCADE
 );
 
 
