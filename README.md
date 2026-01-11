@@ -6,7 +6,7 @@
 - chấm điểm
 - trao đổi.
 
-**Repository:** [https://github.com/transon999123/HCMUT-CO3105-DATH-HTTT.git](https://github.com/transon999123/HCMUT-CO3105-DATH-HTTT.git)
+**Repository:** [https://github.com/transon999123/HCMUT-classroom-management-system-project---remastered.git](https://github.com/transon999123/HCMUT-classroom-management-system-project---remastered.git)
 
 ---
 
@@ -88,6 +88,7 @@ Truy cập ứng dụng tại: http://localhost:<port_on_terminal>
 - Chấm điểm: Xem danh sách nộp bài, chấm điểm và gửi nhận xét cho sinh viên.
 - Tài liệu (Materials): Upload bài giảng, slide, video cho lớp.
 - Quản lý Sinh viên: Xem danh sách sinh viên trong lớp.
+- Tạo bài kiểm tra trắc nghiệm, tự luận
 
 ### Sinh viên (Student)
 - Lớp học của tôi: Xem các lớp đã được ghi danh.
@@ -95,10 +96,11 @@ Truy cập ứng dụng tại: http://localhost:<port_on_terminal>
 - Tài liệu: Tải xuống tài liệu học tập.
 - Thảo luận (Forum): Trao đổi, hỏi đáp trong từng lớp học (có hỗ trợ gửi ảnh).
 - Thông báo: Nhận thông báo Real-time (khi có bài tập mới, có điểm, v.v.).
+- Thực hiện bài kiểm tra
 
 ## API Documentation
 Danh sách API đính kèm ở:
-![API Backend](https://github.com/transon999123/HCMUT-CO3105-DATH-HTTT/blob/436664160b809f5d3ab000a644126efb4eaa164b/backend/api_backend%20(1).xlsx)
+![API Backend](https://docs.google.com/spreadsheets/d/1kIqmH7Vb82eqz09N1oTHclGyBUFJcm_Ca5hf6y0XTvM/edit?gid=0#gid=0)
 
 ## Liên hệ:
 - Author: Trần Hữu Nguyên Sơn
