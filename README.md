@@ -103,6 +103,6 @@ Danh sách API đính kèm ở:
 ![API Backend](https://docs.google.com/spreadsheets/d/1kIqmH7Vb82eqz09N1oTHclGyBUFJcm_Ca5hf6y0XTvM/edit?gid=0#gid=0)
 
 ## Liên hệ:
-- Author: Trần Hữu Nguyên Sơn
-- MSSV: 2312981
+- Author: Trần Hữu Nguyên Sơn - Ho Chi Minh City University of Technology, Vietnam National University, Vietnam
+- Collaborators: Nguyễn Trí Dũng - Dalian University of Technology, China P.R
 - Email liên hệ tại: ![son.tran2312981n48@hcmut.edu.vn](son.tran2312981n48@hcmut.edu.vn)
